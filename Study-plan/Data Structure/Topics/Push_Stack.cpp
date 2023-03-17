@@ -1,0 +1,17 @@
+class stack{
+private:
+    int top;
+    int array[MAX_SIZE];
+    stack(){
+        top=-1;
+    }
+public:
+ void push(int value){
+        if(value>=MAX_SIZE-1){ // 0  -> 99 
+            cout<<"Stack is fill\n";
+        }
+        else{
+            top++;
+            array[top]=value;
+        }
+};
