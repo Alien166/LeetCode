@@ -1,0 +1,4 @@
+ int getSize()
+    {
+        return count;
+    }
