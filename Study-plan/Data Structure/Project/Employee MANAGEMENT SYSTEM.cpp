@@ -13,6 +13,8 @@ using namespace std;
      char job_title[30];
      char date[30];
      node*prev,*next;
+     node*nextS;
+     int New_Item;
 
 
  };
@@ -21,11 +23,15 @@ using namespace std;
  private:
      node*head;
      char ch;
+     node*top;
+     node*front,*rear;
  public:
      employ()
      {
          head=NULL;
+         top=NULL;
      }
+
      // this a intro function to our project
      void intro()
      {
@@ -57,56 +63,60 @@ cout<<"\n\t\t*******************************************************************
          return;
      }
 
+
      // this function will insert a record at very first
-     void Add_First()
+     void Add_Stack()
      {
-         node*NewR=new node;
-         cout << "\n\t\t Enter the employee id:";
-         cin >> NewR->id;
-         fflush(stdin);
-         cout << "\n\t\t Enter the full name of employee:";
-         cin.getline(NewR->name, 50);
-         fflush(stdin);
-         cout << "\n\t\t Enter the qualification of employee:";
-         cin.getline(NewR->que, 30);
-         fflush(stdin);
-         cout << "\n\t\t Enter the address:";
-         cin.getline(NewR->address, 50);
-         fflush(stdin);
-         cout << "\n\t\t enter the city:";
-         cin.getline(NewR->city, 30);
-         fflush(stdin);
-         cout << "\n\t\t Enter the job title:";
-         cin.getline(NewR->job_title, 30);
-         fflush(stdin);
-         cout << "\n\t\t Enter the salary:";
-         cin >> NewR->salary;
-         fflush(stdin);
-         cout << "\n\t\t Enter the start date:";
-         cin.getline(NewR->date, 30);
-         fflush(stdin);
-         NewR->next=head;
-         NewR->prev=NULL;
-         if(head !=NULL)
-         {
-             head->prev=NewR;
+             node*NewR=new node;
+             cout << "\n\t\t Enter the employee id:";
+             cin>>NewR->id;
+             fflush(stdin);
+             cout << "\n\t\t Enter the full name of employee:";
+             cin.getline(NewR->name, 50);
+             fflush(stdin);
+             cout << "\n\t\t Enter the qualification of employee:";
+             cin.getline(NewR->que, 30);
+             fflush(stdin);
+             cout << "\n\t\t Enter the address:";
+             cin.getline(NewR->address, 50);
+             fflush(stdin);
+             cout << "\n\t\t enter the city:";
+             cin.getline(NewR->city, 30);
+             fflush(stdin);
+             cout << "\n\t\t Enter the job title:";
+             cin.getline(NewR->job_title, 30);
+             fflush(stdin);
+             cout << "\n\t\t Enter the salary:";
+             cin >> NewR->salary;
+             fflush(stdin);
+             cout << "\n\t\t Enter the start date:";
+             cin.getline(NewR->date, 30);
+             fflush(stdin);
+             NewR->next = NULL;
+             if (top == NULL)
+             {
+                 // If the list is empty, the new node becomes the top
+                 top = NewR;
+             }
+             else
+             {
+                 // If the list is not empty, the new node is added to the beginning
+                 NewR->next = top;
+                 top = NewR;
+             }
+             cout << "\n\t\t Employee recorded successfully!" << endl;
          }
-         head=NewR;
-         cout<<" \n \t \t Record Inserted Successfully ."<<endl;
 
-     }
-
-
-     // this function to insert record in the very of last .
-     void Add_last()
+     void add_queue()
      {
-         if (head == NULL)
+         node* NewR = new node;
+         if (top == NULL)
          {
              cout << "\n \t\t system is empty:" << endl;
              cout << "\n \t \t Add a new record \n\t Press 'Y' to add record or 'N' to terminate:";
              cin>>ch;
              if(ch=='Y' || ch=='y') {
-                 Add_First();
+                 Add_Stack();
                  return;
              }
              else {
@@ -115,7 +125,60 @@ cout<<"\n\t\t*******************************************************************
          }
          else
          {
-             node*temp=head;
+             cout << "\n\t\t Enter the employee id:";
+             cin >> NewR->id;
+             fflush(stdin);
+             cout << "\n\t\t Enter the full name of employee:";
+             cin.getline(NewR->name, 50);
+             fflush(stdin);
+             cout << "\n\t\t Enter the qualification of employee:";
+             cin.getline(NewR->que, 30);
+             fflush(stdin);
+             cout << "\n\t\t Enter the address:";
+             cin.getline(NewR->address, 50);
+             fflush(stdin);
+             cout << "\n\t\t Enter the city:";
+             cin.getline(NewR->city, 30);
+             fflush(stdin);
+             cout << "\n\t\t Enter the job title:";
+             cin.getline(NewR->job_title, 30);
+             fflush(stdin);
+             cout << "\n\t\t Enter the salary:";
+             cin >> NewR->salary;
+             fflush(stdin);
+             cout << "\n\t\t Enter the start date:";
+             cin.getline(NewR->date, 30);
+             fflush(stdin);
+             NewR->next = NULL;
+
+                 // If the queue is not empty, the new node is added to the rear
+                 rear->next = NewR;
+                 NewR->prev = rear;
+                 rear = NewR;
+             cout << "\n\t\t Employee added successfully!" << endl;
+         }
+     }
+
+
+     // this function to insert record in the very of last .
+     void Add_last()
+     {
+         if (top == NULL)
+         {
+             cout << "\n \t\t system is empty:" << endl;
+             cout << "\n \t \t Add a new record \n\t Press 'Y' to add record or 'N' to terminate:";
+             cin>>ch;
+             if(ch=='Y' || ch=='y') {
+                 Add_Stack();
+                 return;
+             }
+             else {
+                 exit(1);
+             }
+         }
+         else
+         {
+             node*temp=top;
              while (temp->next != NULL)
              {
                  temp=temp->next;
@@ -151,19 +214,20 @@ cout<<"\n\t\t*******************************************************************
              NewR->prev=temp;
 
               }
+         cout << "\n\t\t Employee recorded successfully!" << endl;
      }
 
 
      // this function based on id to add after that
      void Add_After()
      {
-         if(head == NULL)
+         if(top == NULL)
          {
              cout << "\n \t\t system is empty:" << endl;
              cout << "\n \t \t Add a new record \n\t Press 'Y' to add record or 'N' to terminate:";
              cin>>ch;
              if(ch=='y' || ch=='Y'){
-                 Add_First();
+                 Add_Stack();
                  return;
              }
              else{
@@ -176,7 +240,7 @@ cout<<"\n\t\t*******************************************************************
              cout << "\n\t\t Enter the id after which you want to add a new record:";
              cin>>val;
              bool flag= false;
-             node*temp=head;
+             node*temp=top;
              node*p;
              while (temp !=NULL) {
                  if (temp->id == val) {
@@ -232,13 +296,13 @@ cout<<"\n\t\t*******************************************************************
      // this function will add before id u wanted to added
      void Add_Before()
      {
-         if(head== NULL)
+         if(top== NULL)
          {
              cout << "\n\t\t List is empty:" << endl;
              cout << "\n\t\t Add a new record\n\t Press Y or N:";
              cin >> ch;
              if (ch == 'Y' || ch == 'y') {
-                 Add_First();
+                 Add_Stack();
                  return;
              }
              else {
@@ -251,9 +315,9 @@ cout<<"\n\t\t*******************************************************************
              cout << "\n\t\t Enter the id before which you want to add a new record:" << endl;
              cin>>val;
              bool flag=false;
-             node*temp=head;
+             node*temp=top;
              if(temp->id==val) {
-                 Add_First();
+                 Add_Stack();
                  return;
              }
              else {
@@ -308,13 +372,13 @@ cout<<"\n\t\t*******************************************************************
      // this function determine to deleted a data for employee
      void del()
      {
-         if(head== NULL)
+         if(top== NULL)
          {
              cout << "\n\t\t List is empty:" << endl;
              cout << "\n\t\t Add a new record\n\t Press Y or N:";
              cin >> ch;
              if (ch == 'Y' || ch == 'y') {
-                 Add_First();
+                 Add_Stack();
                  return;
              }
              else {
@@ -326,12 +390,12 @@ cout<<"\n\t\t*******************************************************************
              int val;
              cout << "\n\t\t Enter the employee id which do you want to delete a record:";
              cin>>val;
-             node*temp=head;
+             node*temp=top;
              bool flag= false;
              if(temp->id==val)
              {
-                 head=temp->next;
-                 head->prev=NULL;
+                 top=temp->next;
+                 top->prev=NULL;
                  delete temp;
                  flag= true;
                  if(flag== true) {
@@ -373,15 +437,16 @@ cout<<"\n\t\t*******************************************************************
          }
      }
 
+
      void show()
      {
-         if(head == NULL)
+         if(top ==NULL)
          {
              cout << "\n\t\t List is empty:" << endl;
              cout << "\n\t\t Add a new record\n\t Press Y or N:";
              cin>>ch;
              if(ch=='Y' || ch=='y') {
-                 Add_First();
+                 Add_Stack();
                  return;
              }
              else {
@@ -390,7 +455,7 @@ cout<<"\n\t\t*******************************************************************
          }
          else
          {
-             node*temp=head;
+             node*temp=top;
              while (temp!=NULL)
              {
       cout << "\n\t\t ******************************************************" << endl;
@@ -412,13 +477,13 @@ cout<<"\n\t\t*******************************************************************
      // this function designed to search an specific employee.
      void search()
      {
-         if(head == NULL)
+         if(top == NULL)
          {
              cout << "\n\t\t List is empty:" << endl;
              cout << "\n\t\t Add a new record\n\t Press Y or N:";
              cin>>ch;
              if(ch=='Y' || ch=='y') {
-                 Add_First();
+                 Add_Stack();
                  return;
              }
              else {
@@ -430,7 +495,7 @@ cout<<"\n\t\t*******************************************************************
              int val;
              cout << "\n\t\t Enter employee id which you want to search:";
              cin>>val;
-             node*temp=head;
+             node*temp=top;
              bool flag=false;
              while (temp != NULL)
              {
@@ -458,13 +523,13 @@ cout<<"\n\t\t*******************************************************************
      /// this function to updated data for employees
      void update()
      {
-         if(head == NULL)
+         if(top == NULL)
          {
              cout << "\n\t\t List is empty" << endl;
              cout << "\n\t\t Add a new record \n\t Press Y to proceed or N to exit:" << endl;
              cin>>ch;
              if(ch=='Y' || ch=='y') {
-                 Add_First();
+                 Add_Stack();
                  return;
              }
              else {
@@ -474,7 +539,7 @@ cout<<"\n\t\t*******************************************************************
          else
          {
              node*NewR=new node;
-             node*temp=head;
+             node*temp=top;
              int val;
              cout << "\n\t\t enter the emplyee id whose record you want to update:";
              cin>>val;
@@ -526,7 +591,7 @@ label2:
     if(n==1)
     {
      label1:
-        cout << "_______________________________________" << endl;
+        cout << "\t\t_______________________________________" << endl;
         cout << "\n\t\t Where you want to add record? " << endl;
         cout << "\t\t\t" << endl;
         cout << "\n\t\t 1- insert at very first place " << endl;
@@ -537,7 +602,7 @@ label2:
         cin>>n;
         if(n==1)
         {
-            em.Add_First();
+            em.Add_Stack();
             cout << "\n\t\t do you want to go to main menu? press 'y' to continue or 'N' to exit " << endl;
             cin>>ch;
             if(ch=='Y' || ch== 'y') {
@@ -550,7 +615,7 @@ label2:
         else if(n==2)
         {
             em.Add_last();
-            cout << "\n\t\t do you want to go to main menu?" << endl;
+            cout << "\n\t\t do you want to go to main menu? press 'y' to continue or 'N' to exit" << endl;
             cin>>ch;
             if(ch == 'Y'|| ch=='y') {
                 goto label2;
@@ -561,7 +626,7 @@ label2:
         }
         else if(n==3) {
             em.Add_After();
-            cout << "\n\t\t do you want to go to main menu?" << endl;
+            cout << "\n\t\t do you want to go to main menu? press 'y' to continue or 'N' to exit" << endl;
             cin>>ch;
             if(ch == 'Y'|| ch=='y') {
                 goto label2;
@@ -572,7 +637,7 @@ label2:
         }
         else if(n==4) {
             em.Add_Before();
-            cout << "\n\t\t do you want to go to main menu?" << endl;
+            cout << "\n\t\t do you want to go to main menu? press 'y' to continue or 'N' to exit" << endl;
             cin>>ch;
             if(ch=='Y' || ch=='y') {
                 goto label2;
@@ -589,7 +654,7 @@ label2:
     else if(n==2)
     {
         em.search();
-        cout << "\n\t\t do you want to go to main menu?" << endl;
+        cout << "\n\t\t do you want to go to main menu? press 'y' to continue or 'N' to exit" << endl;
         cin>>ch;
         if(ch == 'Y' ||ch=='y')
         {
@@ -603,7 +668,7 @@ label2:
     else if(n==3)
     {
         em.update();
-        cout << "\n\t\t do you want to go to main menu?" << endl;
+        cout << "\n\t\t do you want to go to main menu? press 'y' to continue or 'N' to exit" << endl;
         cin>>ch;
         if(ch == 'Y' ||ch=='y')
         {
@@ -617,7 +682,7 @@ label2:
     else if(n==4)
     {
         em.del();
-        cout << "\n\t\t do you want to go to main menu?" << endl;
+        cout << "\n\t\t do you want to go to main menu? press 'y' to continue or 'N' to exit" << endl;
         cin>>ch;
         if(ch == 'Y' ||ch=='y')
         {
@@ -631,7 +696,7 @@ label2:
     else if(n==5)
     {
         em.show();
-        cout << "\n\t\t do you want to go to main menu?" << endl;
+        cout << "\n\t\t do you want to go to main menu? press 'y' to continue or 'N' to exit" << endl;
         cin>>ch;
         if(ch == 'Y' ||ch=='y')
         {
